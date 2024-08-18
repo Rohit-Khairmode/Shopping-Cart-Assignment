@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import Header from "./_components/Header";
 import "./_styles/globals.css";
-import { CartItemContextProvider } from "./_contexts/cartItems";
+import { CartItemContextProvider } from "./_contexts/cartItemsQuantity";
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

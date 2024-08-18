@@ -50,12 +50,11 @@ export async function getUser(email: string) {
     .from("users")
     .select("*")
     .eq("email", email)
-    .single();
-
-  if (error) {
-    console.error(error);
-    throw new Error("User not found");
-  }
+    ?.single();
+  // if (error) {
+  //   console.error(error, "from get user");
+  //   throw new Error("There is a some error while fetching data");
+  // } throwing error manually create problem for authentication
 
   return data;
 }
@@ -78,14 +77,14 @@ export async function getCartProducts(id: number) {
 // CREATE
 
 export async function createUser(newUser: any) {
-  const { data, error } = await supabase.from("users").insert([newUser]);
+  const { data, error } = await supabase.from("users").insert(newUser).select();
 
   if (error) {
-    console.error(error);
+    console.error(error + "from createUser");
     throw new Error("User could not be created");
   }
-
-  return data;
+  console.log(data);
+  return data.at(0);
 }
 export async function getCartItems(id: number) {
   const { data, error } = await supabase

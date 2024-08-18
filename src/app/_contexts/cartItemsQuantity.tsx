@@ -8,23 +8,23 @@ type ComplexObject = {
 };
 
 // The context is created with `| null` in the type, to accurately reflect the default value.
-const CartItemContext = createContext<ComplexObject | null>(null);
+const CartItemsQuantityContext = createContext<ComplexObject | null>(null);
 
 // The `| null` will be removed via the check in the Hook.
 function CartItemContextProvider({ children }: any) {
   const [cartItems, setCartItems] = useState(0);
   return (
-    <CartItemContext.Provider value={{ cartItems, setCartItems }}>
+    <CartItemsQuantityContext.Provider value={{ cartItems, setCartItems }}>
       {children}
-    </CartItemContext.Provider>
+    </CartItemsQuantityContext.Provider>
   );
 }
-const useCart = () => {
-  const object = useContext(CartItemContext);
+const useCartItemsQuantity = () => {
+  const object = useContext(CartItemsQuantityContext);
   if (!object) {
     throw new Error("useGetComplexObject must be used within a Provider");
   }
   return object;
 };
 
-export { CartItemContextProvider, useCart };
+export { CartItemContextProvider, useCartItemsQuantity };

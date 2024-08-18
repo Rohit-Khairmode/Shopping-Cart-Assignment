@@ -5,15 +5,18 @@ import { useTransition } from "react";
 import NotFoundImage from "../../../public/Image-not-found.png";
 import { updateCartQuantity } from "../_lib/actions";
 import { formatCurrency } from "../utils/helpers";
+import { useCartItemsQuantity } from "../_contexts/cartItemsQuantity";
 
 function ProductCard({
   product: { id, image, name, description, price },
   userId,
 }: any) {
   const [isPending, startTransition] = useTransition();
+  const { cartItems, setCartItems } = useCartItemsQuantity();
   const AddToCartHandler = () => {
     startTransition(async () => {
       updateCartQuantity(id, userId, true);
+      setCartItems(cartItems + 1);
     });
   };
   return (

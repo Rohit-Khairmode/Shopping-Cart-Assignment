@@ -1,16 +1,17 @@
 "use client";
 import {
   ArrowRightCircleIcon,
+  HomeModernIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useCart } from "../_contexts/cartItems";
-import { signOutAction } from "../_lib/actions";
 import { useState } from "react";
+import { useCartItemsQuantity } from "../_contexts/cartItemsQuantity";
+import { signOutAction } from "../_lib/actions";
 
 function Navigation({ session }: any) {
-  const { cartItems, setCartItems } = useCart();
+  const { cartItems, setCartItems } = useCartItemsQuantity();
   if (!session) setCartItems(0);
   const [signingOff, setSigningOff] = useState(false);
 
@@ -24,10 +25,15 @@ function Navigation({ session }: any) {
           height={80}
         />
       </Link>
-      <ul className="flex gap-2 justify-center items-center">
+      <ul className="flex gap-2 lg:gap-4 justify-center items-center">
+        <li>
+          <Link href="/" className="">
+            <HomeModernIcon className="size-6 lp:size-8 hover:text-accent-400" />
+          </Link>
+        </li>
         <li className="relative">
           <Link href="/cart">
-            <ShoppingCartIcon className="size-6 text-primary-500 hover:text-accent-400 active:text-accent-400" />
+            <ShoppingCartIcon className="size-6 lp:size-8 text-primary-500 hover:text-accent-400 active:text-accent-400" />
             {cartItems != 0 ? (
               <span className="bg-accent-500 text-slate-50 font-bold rounded-[50%]  absolute top-0 translate-y-[-30%] left-[60%] translate-x-[-50%] px-0.5 text-sm ">
                 {cartItems >= 10 ? "9+" : cartItems}
@@ -44,7 +50,6 @@ function Navigation({ session }: any) {
                 alt={session.user.name}
                 referrerPolicy="no-referrer"
               />
-              <span>You</span>
             </button>
           ) : (
             <Link

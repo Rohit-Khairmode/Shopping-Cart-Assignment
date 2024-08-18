@@ -13,7 +13,6 @@ async function page() {
     };
     return obj;
   });
-
   return <Cart products={products} userId={userId} />;
 }
 

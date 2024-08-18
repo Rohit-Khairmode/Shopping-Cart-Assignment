@@ -5,9 +5,8 @@ import { createUser, getUser } from "./data-service";
 const authConfig = {
   providers: [
     Google({
-      clientId:
-        "126591977385-7t43gti0vep5rhr8traljar8unln1aoe.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     }),
   ],
   callbacks: {
@@ -16,12 +15,19 @@ const authConfig = {
       return !!auth?.user; //trick to convert any value to boolean
     },
     async signIn({ user, account, profile }: any) {
+      console.log("SIGNIN STARTED");
       //this callback get called before signin process starts and signIn process starts when we return true from this function
+      console.log(user, "from auth");
       try {
         const existingUser = await getUser(user.email);
-
-        if (!existingUser)
-          await createUser({ email: user.email, fullName: user.name });
+        console.log(existingUser, "from auth ");
+        if (!existingUser) {
+          const data = await createUser({
+            email: user.email,
+            fullName: user.name,
+          });
+          console.log(data, "from auth");
+        }
 
         return true;
       } catch {
